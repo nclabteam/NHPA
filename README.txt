@@ -4,16 +4,18 @@
 
 - In NHPA, HPA is enabled for each edge node in the cluster:
 
-	+ Execute the following for each deployment:
+	+ Execute the following for each deployment (to get deployment name, use "kubectl get deployment"):
 
 		"kubectl autoscale deployment <deployment_name> --min=3 --max=12 --cpu-percent=80"
+
+	+ To check hpa status, use "kubectl get hpa"
 
 
 *** Performance evaluation ***
 
 - Section V_B
 
-	+ Execute the following script on each node at the same time (must enter root) and check the pod distribution
+	+ Execute the following script on each node at the same time (must enter root) and check the pod distribution (to get service name and its cluster ip, use "kubectl get service")
 
 		"docker run --cpus 3 --rm ricoli/hey -c <numOfConcurrentReqs> -z <duration> -n 100000 -q 50 --disable-keepalive http://serviceIP:port/hello"
 
