@@ -1,0 +1,100 @@
+from operator import delitem
+
+import numpy as np; np.random.seed(42)
+import matplotlib.pyplot as plt
+from matplotlib.transforms import ScaledTranslation
+import pandas as pd
+
+# y = np.arange(0, 70, 10)
+df1 = pd.read_csv("/home/phuclh/PycharmProjects/graph/2022-05-26/cumulative_latency_2022_05_26_withError_ms_scale.csv", delimiter=",")
+labels1 = ["3:3:3", "5:2:2", "7:1:1"]
+xPos = [1, 3, 6]
+x = np.arange(len(labels1))
+y1 = df1['l11'].tolist()
+y2 = df1['l12'].tolist()
+y3 = df1['l13'].tolist()
+y4 = df1['l14'].tolist()
+
+y5 = df1['l21'].tolist()
+y6 = df1['l22'].tolist()
+y7 = df1['l23'].tolist()
+y8 = df1['l24'].tolist()
+
+y9 = df1['l31'].tolist()
+y10 = df1['l32'].tolist()
+y11 = df1['l33'].tolist()
+y12 = df1['l34'].tolist()
+
+yerr1 = df1['d11'].tolist()
+yerr2 = df1['d12'].tolist()
+yerr3 = df1['d13'].tolist()
+yerr4 = df1['d14'].tolist()
+yerr5 = df1['d21'].tolist()
+yerr6 = df1['d22'].tolist()
+yerr7 = df1['d23'].tolist()
+yerr8 = df1['d24'].tolist()
+yerr9 = df1['d31'].tolist()
+yerr10 = df1['d32'].tolist()
+yerr11 = df1['d33'].tolist()
+yerr12 = df1['d34'].tolist()
+
+fig, ax = plt.subplots(1, 3, figsize=(15, 4))
+# fig.suptitle('Latency at nodes', fontsize=20)
+ax[0].set_ylim(0, 200)
+ax[0].set_xticks(x)
+ax[0].set_xticklabels(labels1)
+ax[0].tick_params(axis='both', which='major', labelsize=20)
+ax[0].set_ylabel("Average response time [ms]", fontsize=18)
+# ax[0].set_yticks(y)
+ax[1].set_ylim(0, 200)
+ax[1].set_xticks(x)
+ax[1].set_xticklabels(labels1)
+ax[1].tick_params(axis='both', which='major', labelsize=20)
+ax[1].set_xlabel("Proportion of concurrent requests", fontsize=18)
+# ax[1].set_yticks(y)
+ax[2].set_ylim(0, 200)
+ax[2].set_xticks(x)
+ax[2].set_xticklabels(labels1)
+ax[2].tick_params(axis='both', which='major', labelsize=20)
+
+er1 = ax[0].errorbar(x + 0.2, y1, yerr=yerr1, marker="o",  markersize=9, linewidth=3, linestyle="none")
+er2 = ax[0].errorbar(x - 0.2, y2, yerr=yerr2, marker="o",  markersize=9, linewidth=3, linestyle="none")
+er3 = ax[0].errorbar(x - 0.1, y3, yerr=yerr3, marker="o", markersize=9, linewidth=3, linestyle="none")
+er4 = ax[0].errorbar(x + 0.1, y4, yerr=yerr4, marker="o", markersize=9, linewidth=3, linestyle="none")
+
+er5 = ax[1].errorbar(x + 0.2, y5, yerr=yerr5, marker="o",  markersize=9, linewidth=3, linestyle="none")
+er6 = ax[1].errorbar(x - 0.2, y6, yerr=yerr6, marker="o",  markersize=9, linewidth=3, linestyle="none")
+er7 = ax[1].errorbar(x - 0.1, y7, yerr=yerr7, marker="o", markersize=9, linewidth=3, linestyle="none")
+er8 = ax[1].errorbar(x + 0.1, y8, yerr=yerr8, marker="o", markersize=9, linewidth=3, linestyle="none")
+
+er9 = ax[2].errorbar(x + 0.2, y9, yerr=yerr9, marker="o", markersize=9, linewidth=3, linestyle="none")
+er10 = ax[2].errorbar(x - 0.2, y10, yerr=yerr10, marker="o", markersize=9, linewidth=3, linestyle="none")
+er11 = ax[2].errorbar(x - 0.1, y11, yerr=yerr11, marker="o", markersize=9, linewidth=3, linestyle="none")
+er12 = ax[2].errorbar(x + 0.1, y12, yerr=yerr12, marker="o", markersize=9, linewidth=3, linestyle="none")
+
+ax[0].set_title('Node 1', fontSize=20)
+ax[1].set_title('Node 2', fontSize=20)
+ax[2].set_title('Node 3', fontSize=20)
+
+# Shrink current axis by 20%
+box1 = ax[0].get_position()
+ax[0].set_position([box1.x0, box1.y0, box1.width * 1, box1.height])
+box2 = ax[1].get_position()
+ax[1].set_position([box2.x0, box2.y0, box2.width * 1, box2.height])
+box3 = ax[2].get_position()
+ax[2].set_position([box3.x0, box3.y0, box3.width * 1, box3.height])
+
+legend1 = ax[0].legend([er1, er2, er3, er4], ['NHPA', 'KE (1-1-1)', 'KE (3-3-3)', 'KE (6-6-6)'], loc='upper left', prop={'size': 18})
+legend1.get_frame().set_alpha(0.5)
+# legend1.get_frame().set_facecolor((0, 0, 1, 0.1))
+legend2 = ax[1].legend([er5, er6, er7, er8], ['NHPA', 'KE (1-1-1)', 'KE (3-3-3)', 'KE (6-6-6)'], loc='upper left', prop={'size': 18})
+legend2.get_frame().set_alpha(0.5)
+# legend2.get_frame().set_facecolor((0, 0, 1, 0.1))
+legend3 = ax[2].legend([er9, er10, er11, er12], ['NHPA', 'KE (1-1-1)', 'KE (3-3-3)', 'KE (6-6-6)'], loc='upper left', prop={'size': 18})
+legend3.get_frame().set_alpha(0.5)
+# legend3.get_frame().set_facecolor((0, 0, 1, 0.1))
+ax[0].grid(which='both')
+ax[1].grid(which='both')
+ax[2].grid(which='both')
+plt.tight_layout()
+plt.show()
