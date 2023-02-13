@@ -1,4 +1,4 @@
-- Experimental set up: please refer to NHPA experimental setup section and THPA https://github.com/nclabteam/THPA/settings experimental setup guidelines.
+- Experimental set up: please refer to NHPA experimental setup section and [THPA](https://github.com/nclabteam/THPA/) experimental setup guidelines.
 
 - Application to be deployed can be found in app/ directory. 1 application deployment is deployed on each node. You should replace nodeName in the yaml file with your actual node name.
 
